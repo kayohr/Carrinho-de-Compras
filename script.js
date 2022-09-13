@@ -1,6 +1,8 @@
 // Esse tipo de comentário que estão antes de todas as funções são chamados de JSdoc,
 // experimente passar o mouse sobre o nome das funções e verá que elas possuem descrições! 
 
+// const { fetchProducts } = require('./helpers/fetchProducts');
+
 // Fique a vontade para modificar o código já escrito e criar suas próprias funções!
 
 /**
@@ -54,7 +56,7 @@ const createProductItemElement = ({ id, title, thumbnail }) => {
  * @param {Element} product - Elemento do produto.
  * @returns {string} ID do produto.
  */
-const getIdFromProductItem = (product) => product.querySelector('span.id').innerText;
+// const getIdFromProductItem = (product) => product.querySelector('span.id').innerText;
 
 /**
  * Função responsável por criar e retornar um item do carrinho.
@@ -64,12 +66,20 @@ const getIdFromProductItem = (product) => product.querySelector('span.id').inner
  * @param {string} product.price - Preço do produto.
  * @returns {Element} Elemento de um item do carrinho.
  */
-const createCartItemElement = ({ id, title, price }) => {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `ID: ${id} | TITLE: ${title} | PRICE: $${price}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
-};
+//   const createCartItemElement = ({ id, title, price }) => {
+//   const li = document.createElement('li');
+//   li.className = 'cart__item';
+//   li.innerText = `ID: ${id} | TITLE: ${title} | PRICE: $${price}`;
+//   li.addEventListener('click', cartItemClickListener);
+//   return li;
+// };
 
-window.onload = () => { };
+async function returnedProducts() {
+  const products = await fetchProducts('computador');
+  const items = document.querySelector('.items');
+  products.forEach((element) => items.appendChild(createProductItemElement(element)));
+}
+
+window.onload = async () => { 
+  await returnedProducts();
+};

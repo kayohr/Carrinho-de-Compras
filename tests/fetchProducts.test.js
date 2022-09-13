@@ -7,20 +7,20 @@ describe('1 - Teste a função fetchProducts', () => {
     expect(typeof fetchProducts).toBe('function');
   });
   test('testar se fetch foi chamada com argumento computador', async ()=>{
-    await fetchProducts('computador');
-    expect(fetch).not.toBe(undefined);
+     fetchProducts('computador');
+    expect(fetch).toHaveBeenCalled();
   });
   test('', async ()=>{
     await fetchProducts('computador');
-    expect(fetch).not.toBe('https://api.mercadolibre.com/sites/MLB/search?q=computador');
+    expect(fetch).toHaveBeenCalledWith('https://api.mercadolibre.com/sites/MLB/search?q=computador');
   });
   test('', async ()=>{
-    await fetchProducts('computador');
-    expect(fetch).not.toBe(computadorSearch);
+    const result = await fetchProducts('computador');
+    expect(result).toEqual(computadorSearch);
   });
   test('', async ()=>{
-    await fetchProducts('');
-    expect(fetch).not.toBe('You must provide an url');
+    const result = await fetchProducts();
+    expect(result).toEqual(new Error('You must provide an url'));
   });
   
 });

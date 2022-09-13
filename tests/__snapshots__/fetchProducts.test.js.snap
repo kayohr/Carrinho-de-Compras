@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`1 - Teste a função fetchProducts : https://api.mercadolibre.com/sites/MLB/search?q=computador 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "https://api.mercadolibre.com/sites/MLB/search?q=computador",
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": Promise {},
+    },
+  ],
+}
+`;
