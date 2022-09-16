@@ -70,11 +70,27 @@ const createProductItemElement = ({ id, title, thumbnail }) => {
  * @param {string} product.price - Preço do produto.
  * @returns {Element} Elemento de um item do carrinho.
  */
+
+  async function removingItems(event) {
+    // console.log(event.target.remove());
+    // const removing = document.querySelectorAll('cart__item');
+    return event.target.remove();
+    // console.log(e);
+    // removing.parentNode.removeChild(removing);
+    // removing.removeChild();
+  }
+  // document.querySelectorAll("button").forEach( function(button) {
+  //   button.addEventListener("click", function(event) {
+  //   const el = event.target || event.srcElement;
+  //   const id = el.id;
+  //   console.log(id);
+  // var btn = document.querySelector('button');
+
   const createCartItemElement = ({ id, title, price }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `ID: ${id} | TITLE: ${title} | PRICE: $${price}`;
-  li.addEventListener('click', () => {});
+  li.addEventListener('click', removingItems);
   return li;
 };
 
@@ -94,7 +110,7 @@ async function itemsCart() {
     const id = element.parentNode.firstChild.innerText;
    // console.log(id);
     const e = await fetchItem(id);
-    console.log(e);
+    // console.log(e);
     cartItem.appendChild(createCartItemElement(e));
     }));
 }
@@ -103,18 +119,3 @@ window.onload = async () => {
   await returnedProducts();
   await itemsCart();
 };
-
-// chamar fecthItem, fazer o fecth a partir do id,do retorno fazer o append 
-// criar click dinamico
-// how get index in hof 
-// how get index in foreach 
-// pegar todos os botoes
-// criar um linester
-// pelo indice saber qual botao clicar
-// puxar os ids/ criar uma variavel para pegar o id, junto com innerText
-// Utilize a função createCartItemElement() para criar os componentes HTML referentes a um item do carrinho;
-
-// Adicione o elemento retornado da função createCartItemElement(product) como filho do elemento <ol class="cart__items">.
-
-// O elemento com classe .cart__items deve adicionar o item escolhido, apresentando corretamente suas informações de id, título e preço.
-// 'span.item_id'
