@@ -72,20 +72,9 @@ const createProductItemElement = ({ id, title, thumbnail }) => {
  */
 
   async function removingItems(event) {
-    // console.log(event.target.remove());
-    // const removing = document.querySelectorAll('cart__item');
     return event.target.remove();
-    // console.log(e);
-    // removing.parentNode.removeChild(removing);
-    // removing.removeChild();
   }
-  // document.querySelectorAll("button").forEach( function(button) {
-  //   button.addEventListener("click", function(event) {
-  //   const el = event.target || event.srcElement;
-  //   const id = el.id;
-  //   console.log(id);
-  // var btn = document.querySelector('button');
-
+  
   const createCartItemElement = ({ id, title, price }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
