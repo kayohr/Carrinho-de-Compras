@@ -1,6 +1,8 @@
 // Esse tipo de comentário que estão antes de todas as funções são chamados de JSdoc,
 // experimente passar o mouse sobre o nome das funções e verá que elas possuem descrições! 
 
+// const getSavedCartItems = require('./helpers/getSavedCartItems');
+
 // const { fetchItem } = require("./helpers/fetchItem");
 
 // const { forEach } = require("cypress/types/lodash");
@@ -72,7 +74,7 @@ const createProductItemElement = ({ id, title, thumbnail }) => {
  */
 
   async function removingItems(event) {
-    return event.target.remove();
+    return event.target.remove(); // https://pt.stackoverflow.com/questions/4605/remover-elemento-da-p%C3%A1gina-com-javascript
   }
   
   const createCartItemElement = ({ id, title, price }) => {
@@ -100,11 +102,26 @@ async function itemsCart() {
    // console.log(id);
     const e = await fetchItem(id);
     // console.log(e);
-    cartItem.appendChild(createCartItemElement(e));
+    const test = createCartItemElement(e);
+    cartItem.appendChild(test);
+    saveCartItems(cartItem.innerHTML);
     }));
+}
+
+async function saved() { 
+  const cartItem = document.querySelector('.cart__items');
+  const savedItems = getSavedCartItems('cartItems');
+  cartItem.innerHTML = savedItems;
+  // console.log(savedItems);
+  const array = [...cartItem.children]; // https://stackoverflow.com/questions/222841/most-efficient-way-to-convert-an-htmlcollection-to-an-array
+  console.log(array);
+  array.forEach((element) => element.addEventListener('click', removingItems));
+  // console.log(cartItem.children);
+  return cartItem;
 }
 
 window.onload = async () => { 
   await returnedProducts();
   await itemsCart();
+  await saved();
 };
