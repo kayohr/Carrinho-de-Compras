@@ -72,8 +72,16 @@ const createProductItemElement = ({ id, title, thumbnail }) => {
  * @param {string} product.price - Preço do produto.
  * @returns {Element} Elemento de um item do carrinho.
  */
+ const cartItem = document.querySelector('.cart__items');
 
   async function removingItems(event) {
+    const selected = document.querySelector('.total_number');
+    const totalPrice = Number(selected.innerText);
+    // console.log(totalPrice);
+    const valorItemRemovido = Number((event.target).attributes.valor.value);
+    const sub = totalPrice - valorItemRemovido;
+    selected.innerText = sub;
+    
     return event.target.remove(); // https://pt.stackoverflow.com/questions/4605/remover-elemento-da-p%C3%A1gina-com-javascript
   }
   
@@ -81,9 +89,20 @@ const createProductItemElement = ({ id, title, thumbnail }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `ID: ${id} | TITLE: ${title} | PRICE: $${price}`;
+  li.setAttribute('valor', price);
   li.addEventListener('click', removingItems);
   return li;
 };
+
+async function totalProducts() {
+  const totalPrice = document.getElementsByClassName('total_number')[0];
+  const array = [...cartItem.children];
+  let total = 0;
+  array.forEach((element) => { total += Number(element.attributes.valor.value); });
+  totalPrice.innerText = `${total}`;
+  
+    console.log(total);
+}
 
 async function returnedProducts() {
   const products = await fetchProducts('computador');
@@ -92,7 +111,6 @@ async function returnedProducts() {
 }
 
 async function itemsCart() {
-  const cartItem = document.querySelector('.cart__items');
   const addItem = document.querySelectorAll('.item__add');
   // addItem.addEventListener('click', cartItem);
   addItem.forEach((element) => element.addEventListener('click', async () => {
@@ -105,18 +123,19 @@ async function itemsCart() {
     const test = createCartItemElement(e);
     cartItem.appendChild(test);
     saveCartItems(cartItem.innerHTML);
+    totalProducts();
     }));
 }
 
 async function saved() { 
-  const cartItem = document.querySelector('.cart__items');
   const savedItems = getSavedCartItems('cartItems');
   cartItem.innerHTML = savedItems;
   // console.log(savedItems);
   const array = [...cartItem.children]; // https://stackoverflow.com/questions/222841/most-efficient-way-to-convert-an-htmlcollection-to-an-array
-  console.log(array);
+  // console.log(array);
   array.forEach((element) => element.addEventListener('click', removingItems));
   // console.log(cartItem.children);
+  totalProducts();
   return cartItem;
 }
 
@@ -124,4 +143,5 @@ window.onload = async () => {
   await returnedProducts();
   await itemsCart();
   await saved();
+  await totalProducts();
 };
