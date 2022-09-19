@@ -73,6 +73,7 @@ const createProductItemElement = ({ id, title, thumbnail }) => {
  * @returns {Element} Elemento de um item do carrinho.
  */
  const cartItem = document.querySelector('.cart__items');
+ const items = document.querySelector('.items');
 
   async function removingItems(event) {
     const selected = document.querySelector('.total_number');
@@ -101,12 +102,12 @@ async function totalProducts() {
   array.forEach((element) => { total += Number(element.attributes.valor.value); });
   totalPrice.innerText = `${total}`;
   
-    console.log(total);
+    // console.log(total);
 }
 
 async function returnedProducts() {
   const products = await fetchProducts('computador');
-  const items = document.querySelector('.items');
+  items.innerHTML = '';
   products.forEach((element) => items.appendChild(createProductItemElement(element)));
 }
 
@@ -133,15 +134,36 @@ async function saved() {
   // console.log(savedItems);
   const array = [...cartItem.children]; // https://stackoverflow.com/questions/222841/most-efficient-way-to-convert-an-htmlcollection-to-an-array
   // console.log(array);
-  array.forEach((element) => element.addEventListener('click', removingItems));
+  array.forEach((element) => element.addEventListener('click', removingItems)); 
   // console.log(cartItem.children);
   totalProducts();
   return cartItem;
 }
 
+ const removendo = () => { cartItem.innerHTML = ''; };
+
+async function removeAll() {
+const button = document.querySelector('.empty-cart');
+// const productAll = document.querySelectorAll('.cart__item');
+// const array = [...cartItem.children];
+button.addEventListener('click', removendo);
+// console.log(array)
+// const teste = () => array.forEach((element) => element.remove());
+// button.addEventListener('click', teste);
+}
+
+async function apis() {
+  const cargando = document.createElement('div');
+  cargando.className = 'loading';
+  cargando.innerText = 'carregando...';
+  items.appendChild(cargando);
+}
+
 window.onload = async () => { 
+  await apis();
   await returnedProducts();
   await itemsCart();
   await saved();
   await totalProducts();
+  await removeAll();
 };
